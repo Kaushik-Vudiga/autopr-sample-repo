@@ -2,9 +2,25 @@
 
 
 def validate_password(password: str) -> bool:
-    """Return True when a password meets the current basic requirement.
+    """Validate that a password meets security requirements.
 
-    Current behavior intentionally only checks minimum length.
-    The AutoPR work item will require stronger validation.
+    Requirements:
+    - At least 8 characters long.
+    - Contains at least one uppercase letter.
+    - Contains at least one digit.
+    - Contains at least one special character (non-alphanumeric).
+
+    Args:
+        password: The password string to validate.
+
+    Returns:
+        bool: True if the password meets all criteria, False otherwise.
     """
-    return len(password) >= 8
+    if len(password) < 8:
+        return False
+
+    has_upper = any(c.isupper() for c in password)
+    has_digit = any(c.isdigit() for c in password)
+    has_special = any(not c.isalnum() for c in password)
+
+    return has_upper and has_digit and has_special
